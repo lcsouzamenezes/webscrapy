@@ -11,7 +11,7 @@ print('## __SPYDER CRAWLLER | Start: '+str(now))
 
 # parametros de busca
 page = '1'
-searchLimit = '2000' # maximo de 5000
+searchLimit = '1000' # maximo de 5000
 searchCidade = '2700'
 searchOrdenacao = '5'
 ddd = "(03"
