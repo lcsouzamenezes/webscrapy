@@ -1,7 +1,5 @@
 ##### Crawller seminovos.com.br
-```pip install BeautifulSoup4```
-```pip install requests```
+```pip install BeautifulSoup4 requests```
 
 ##### Crawller web.whatsapp.com
-```pip install selenium```
-```pip install Flask```
+```pip install selenium Flask```
