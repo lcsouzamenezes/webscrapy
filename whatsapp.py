@@ -15,6 +15,34 @@ app = Flask(__name__)
 @app.route("/whatsapp/enviar", methods = ['POST'])
 def sendMenssage():
     data = request.json
+
+    contact = driver.find_element_by_class_name('_2zCfw')
+    contact.send_keys(str(''))
+    for i in data:
+        
+        time.sleep(2)
+        contato = i['contato']
+        mensagem = i['mensagem']
+
+        # selecino o contato que já existe
+        contact = driver.find_element_by_class_name('_2zCfw')
+        time.sleep(5)
+        contact.send_keys(str(contato))
+
+        # array usuarios list_msg[1]
+        user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(str(contato)))
+        time.sleep(5)
+        user.click()
+
+        # pego o campo de mensagem muda de 6 em 6 meses
+        msg_box = driver.find_elements_by_class_name('_3u328')
+
+        # mensagem
+        msg_box[0].send_keys(str(mensagem))
+        time.sleep(5)
+
+        driver.find_element_by_class_name('_3M-N-').click()
+        
     return jsonify(data)
 
 @app.route("/whatsapp/qrcode", methods = ['GET'])
@@ -22,20 +50,18 @@ def sendMenssage():
 def get_qr( filename=None):
 
     driver.find_element_by_css_selector('div[data-ref]').get_attribute("data-ref")
+
+    if "Clique para carregar o código QR novamente" in driver.page_source:
+        reload_qr()
     qr = driver.find_element_by_css_selector('img[alt=\"Scan me!\"]')
 
-    if filename is None:
-        fd, fn_png = tempfile.mkstemp(suffix='.png')
-    else:
-        fd = os.open(filename, os.O_RDWR | os.O_CREAT)
-        fn_png = os.path.abspath(filename)
-    qr.screenshot(fn_png)
-    os.close(fd)
-
-    data = {'teste': fn_png}
-
+    data = {'qrcode': qr.screenshot_as_base64, 'mensagem': 'QR disponível'}
     return jsonify(data)
-
+    
+def reload_qr():
+    driver.find_element_by_css_selector('div[data-ref] > span > div').click()
+    time.sleep(3)
+    
 app.run(debug=True)
 sys.exit()
 # Main 

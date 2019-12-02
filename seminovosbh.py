@@ -10,7 +10,7 @@ now = datetime.now()
 print('## __SPYDER CRAWLLER | Start: '+str(now))
 
 # parametros de busca
-page = '1'
+page = '11'
 searchLimit = '1000' # maximo de 5000
 searchCidade = '2700'
 searchOrdenacao = '5'
